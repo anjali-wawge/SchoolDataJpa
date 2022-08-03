@@ -1,44 +1,59 @@
 package com.schooldatajpa.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="teacher_data")
-public class TeacherEntity {
+@Table(name = "teacher_data") 
+public class TeacherEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="teacher_name")
+
+	@Column(name = "teacher_name")
 	private String teacherName;
-	
-	@Column(name="mobile_no")
+
+	@Column(name = "mobile_no")
 	private Integer mobileNo;
-	
-	@Column(name="subject_specif")
+
+	@Column(name = "subject_specif")
 	private String subjectSpecif;
-	
-	@Column(name="address")
+
+	@Column(name = "address")
 	private String address;
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
 
-	@Override
-	public String toString() {
-		return "TeacherEntity [id=" + id + ", teacherName=" + teacherName + ", mobileNo=" + mobileNo
-				+ ", subjectSpecif=" + subjectSpecif + ", address=" + address + ", dateOfBirth=" + dateOfBirth + "]";
+	// https://www.bezkoder.com/jpa-one-to-many/#JPA_One_to_Many
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherEntity")
+	private List<StudentEntity> studentEntity;
+	
+	public List<StudentEntity> getStudentEntity() {
+		return studentEntity;
+	}
+
+	public void setStudentEntity(List<StudentEntity> studentEntity) {
+		this.studentEntity = studentEntity;
 	}
 
 	public Integer getId() {
@@ -90,7 +105,7 @@ public class TeacherEntity {
 	}
 
 	public TeacherEntity(Integer id, String teacherName, Integer mobileNo, String subjectSpecif, String address,
-			LocalDate dateOfBirth) {
+			LocalDate dateOfBirth, List<StudentEntity> studentEntity) {
 		super();
 		this.id = id;
 		this.teacherName = teacherName;
@@ -98,7 +113,13 @@ public class TeacherEntity {
 		this.subjectSpecif = subjectSpecif;
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
+		this.studentEntity = studentEntity;
 	}
+
+	public TeacherEntity() {
+		
+	}
+
 	
 	
 }

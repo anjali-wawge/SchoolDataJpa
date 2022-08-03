@@ -1,54 +1,66 @@
 package com.schooldatajpa.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="student_data")
-public class StudentEntity {
+@Table(name = "student_data")
+public class StudentEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
 	private String firstName;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
 	private String lastName;
-	
-	@Column(name="mobile_no")
+
+	@Column(name = "mobile_no")
 	private Integer mobileNo;
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Column(name="date_of_birth")
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
-	
-	@Column(name="address")
+
+	@Column(name = "address")
 	private String address;
-		
-	@Column(name="fees")
+
+	@Column(name = "fees")
 	private Float fees;
-	
-	@Column(name="std")
+
+	@Column(name = "std")
 	private String std;
-	
-	@Column(name="marks")
+
+	@Column(name = "marks")
 	private Float marks;
 
+	@Column(name = "teacher_id")
+	private Integer teacherId;
 	
-	
-	public StudentEntity() {
-		
-	}
+	//https://www.bezkoder.com/jpa-one-to-many/#JPA_One_to_Many
+	//the @JoinColumn annotation to specify the foreign key column (teacher_id)
+	@ManyToOne(fetch = FetchType.LAZY)//optional element is set to false for non-null relationship.
+	@JoinColumn(name = "teacher_id",referencedColumnName = "id" ,insertable = false, nullable = false,updatable = false)
+	private TeacherEntity teacherEntity;
 
 	public Integer getId() {
 		return id;
@@ -122,9 +134,16 @@ public class StudentEntity {
 		this.marks = marks;
 	}
 
-	
+	public Integer getTeacherId() {
+		return teacherId;
+	}
+
+	public void setTeacherId(Integer teacherId) {
+		this.teacherId = teacherId;
+	}
+
 	public StudentEntity(Integer id, String firstName, String lastName, Integer mobileNo, LocalDate dateOfBirth,
-			String address, Float fees, String std, Float marks) {
+			String address, Float fees, String std, Float marks, Integer teacherId, TeacherEntity teacherEntity) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -135,15 +154,14 @@ public class StudentEntity {
 		this.fees = fees;
 		this.std = std;
 		this.marks = marks;
+		this.teacherId = teacherId;
+		this.teacherEntity = teacherEntity;
 	}
 
-	@Override
-	public String toString() {
-		return "SchoolDataEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", mobileNo="
-				+ mobileNo + ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", fees=" + fees + ", std=" + std
-				+ ", marks=" + marks + "]";
+	public StudentEntity() {
+		
 	}
-
+	
 	
 	
 }
