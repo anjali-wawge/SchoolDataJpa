@@ -101,4 +101,13 @@ public class StudentController {
 		return new ResponseEntity<>(list7, HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/getAllStudentsBySubjectId", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<StudentEntity>> getAllStudentsBySubjectId(@RequestParam Integer subjectId) {
+
+		List<StudentEntity> studentList = studentService.getAllStudentsBySubjectId(subjectId);
+		if (studentList.size() > 0) {
+			return new ResponseEntity<>(studentList, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(studentList, HttpStatus.NOT_FOUND);
+	}
 }

@@ -45,14 +45,16 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Integer>
 	List<StudentEntity> getAllStudentDataUsingJoin();
 
 	// getAllStudentByTeacherName
-	@Query("SELECT s FROM StudentEntity s INNER JOIN TeacherEntity t ON s.teacherId=t.id WHERE t.teacherName = ?1")
+	@Query("SELECT s FROM StudentEntity s INNER JOIN TeacherEntity t ON t.id=s.teacherId WHERE t.teacherName = ?1")
 	List<StudentEntity> getAllStudentsByTeacherName(String teacherName);
 
 	
-	// getAllStudentBySameName first name same asnare(LIKE)
+	// getAllStudentBySameStartChar first name same asnare(LIKE)
 	@Query("SELECT s from StudentEntity s WHERE s.firstName LIKE ?1%")
 	List<StudentEntity> getAllStudentBySameStartChar(String firstLetter);
 
-	
+	@Query("SELECT st FROM StudentEntity st JOIN st.subjects s WHERE s.id=?1")
+	List<StudentEntity> getAllStudentsBySubjectId(Integer subjectId);
 
+	
 }

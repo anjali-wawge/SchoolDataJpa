@@ -74,4 +74,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentRpository.getAllStudentBySameStartChar(firstLetter);
 	}
 
+	@Override
+	public List<StudentEntity> getAllStudentsBySubjectId(Integer subjectId) {
+	
+		return studentRpository.getAllStudentsBySubjectId(subjectId);
+	}
+
 }

@@ -2,6 +2,7 @@ package com.schooldatajpa.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "student_data")
-public class StudentEntity implements Serializable{
+public class StudentEntity implements Serializable {
 	/**
 	 * 
 	 */
@@ -55,12 +58,16 @@ public class StudentEntity implements Serializable{
 
 	@Column(name = "teacher_id")
 	private Integer teacherId;
-	
-	//https://www.bezkoder.com/jpa-one-to-many/#JPA_One_to_Many
-	//the @JoinColumn annotation to specify the foreign key column (teacher_id)
-	@ManyToOne(fetch = FetchType.LAZY)//optional element is set to false for non-null relationship.
-	@JoinColumn(name = "teacher_id",referencedColumnName = "id" ,insertable = false, nullable = false,updatable = false)
+
+	// https://www.bezkoder.com/jpa-one-to-many/#JPA_One_to_Many
+	// the @JoinColumn annotation to specify the foreign key column (teacher_id)
+	@ManyToOne(fetch = FetchType.LAZY) // optional element is set to false for non-null relationship.
+	@JoinColumn(name = "teacher_id", referencedColumnName = "id", insertable = false, nullable = false, updatable = false)
 	private TeacherEntity teacherEntity;
+
+	@ManyToMany
+	@JoinTable(name = "student_subject", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	Set<SubjectEntity> subjects;
 
 	public Integer getId() {
 		return id;
@@ -142,26 +149,4 @@ public class StudentEntity implements Serializable{
 		this.teacherId = teacherId;
 	}
 
-	public StudentEntity(Integer id, String firstName, String lastName, Integer mobileNo, LocalDate dateOfBirth,
-			String address, Float fees, String std, Float marks, Integer teacherId, TeacherEntity teacherEntity) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.mobileNo = mobileNo;
-		this.dateOfBirth = dateOfBirth;
-		this.address = address;
-		this.fees = fees;
-		this.std = std;
-		this.marks = marks;
-		this.teacherId = teacherId;
-		this.teacherEntity = teacherEntity;
-	}
-
-	public StudentEntity() {
-		
-	}
-	
-	
-	
 }

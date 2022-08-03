@@ -12,5 +12,7 @@ public interface StudentService {
 
 	public List<StudentEntity> getAllStudentBySameStartChar(String firstLetter);
 
+	public List<StudentEntity> getAllStudentsBySubjectId(Integer subjectId);
+
 	
 }
