@@ -14,4 +14,6 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity, Integer>
 	@Query("SELECT s FROM SubjectEntity s JOIN s.studentEntity st WHERE st.id=?1")
 	List<SubjectEntity> getAllSubjectsByStudentId(Integer studentId);
 	
+	@Query("SELECT s FROM SubjectEntity s JOIN s.teacherEntity t WHERE t.id = ?1")
+	List<SubjectEntity> getAllSubejctByTeacherId(Integer teacherId);
 }

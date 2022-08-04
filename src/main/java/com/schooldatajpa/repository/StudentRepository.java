@@ -53,6 +53,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Integer>
 	@Query("SELECT s from StudentEntity s WHERE s.firstName LIKE ?1%")
 	List<StudentEntity> getAllStudentBySameStartChar(String firstLetter);
 
+	//getAllStudentsBySubjectId
 	@Query("SELECT st FROM StudentEntity st JOIN st.subjects s WHERE s.id=?1")
 	List<StudentEntity> getAllStudentsBySubjectId(Integer subjectId);
 

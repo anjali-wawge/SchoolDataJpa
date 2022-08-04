@@ -3,6 +3,7 @@ package com.schooldatajpa.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -48,6 +52,19 @@ public class TeacherEntity implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherEntity")
 	private List<StudentEntity> studentEntity;
 	
+	@ManyToMany
+	@JoinTable(name = "teacher_subject",joinColumns = @JoinColumn(name = "teacher_id"),inverseJoinColumns = @JoinColumn(name="subject_id"))
+	Set<SubjectEntity> subject;
+	
+	
+	public Set<SubjectEntity> getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Set<SubjectEntity> subject) {
+		this.subject = subject;
+	}
+
 	public List<StudentEntity> getStudentEntity() {
 		return studentEntity;
 	}

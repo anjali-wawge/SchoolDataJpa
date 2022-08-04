@@ -15,11 +15,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "student_data")
+@Table(uniqueConstraints = {@UniqueConstraint (columnNames = {"mobile_no"})}, name = "student_data")
 public class StudentEntity implements Serializable {
 	/**
 	 * 
@@ -37,7 +38,8 @@ public class StudentEntity implements Serializable {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "mobile_no")
+	
+	@Column(name = "mobile_no")//,unique = true)we can write here or with table as written above
 	private Integer mobileNo;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")

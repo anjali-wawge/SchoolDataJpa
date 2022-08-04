@@ -24,6 +24,9 @@ public class SubjectEntity {
 	@ManyToMany(mappedBy = "subjects")
 	Set<StudentEntity> studentEntity;
 	
+	@ManyToMany(mappedBy = "subject")
+	Set<TeacherEntity> teacherEntity;
+	
 	public Integer getId() {
 		return id;
 	}

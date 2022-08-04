@@ -10,4 +10,6 @@ public interface SubjectService {
 	
 	public 	List<SubjectEntity> getAllSubjectsByStudentId(Integer studentId);
 
+	public List<SubjectEntity> getAllSubejctByTeacherId(Integer teacherId);
+
 }

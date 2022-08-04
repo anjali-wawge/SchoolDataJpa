@@ -27,4 +27,10 @@ public class SubjectServiceImpl implements SubjectService{
 		return subjectRepository.getAllSubjectsByStudentId(studentId);
 	}
 
+	@Override
+	public List<SubjectEntity> getAllSubejctByTeacherId(Integer teacherId) {
+		
+		return subjectRepository.getAllSubejctByTeacherId(teacherId);
+	}
+
 }

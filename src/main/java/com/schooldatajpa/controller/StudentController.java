@@ -50,7 +50,6 @@ public class StudentController {
 		List<StudentEntity> listOfStud1 = studentService.findStudentsByAddress(address);
 		return new ResponseEntity<>(listOfStud1, HttpStatus.OK);
 	}
-	// cypon drop pedriatric
 
 	@GetMapping(value = "/findByDateOfBirthBetween", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<StudentEntity>> findByDateOfBirth(@RequestParam String fromDate,

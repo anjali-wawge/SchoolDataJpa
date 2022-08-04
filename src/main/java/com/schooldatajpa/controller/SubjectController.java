@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.schooldatajpa.model.SubjectEntity;
+import com.schooldatajpa.model.TeacherSubjectEntity;
 import com.schooldatajpa.service.SubjectService;
 
 @RestController
@@ -35,4 +37,16 @@ public class SubjectController {
 		return new ResponseEntity<>(sublist,HttpStatus.NOT_FOUND);
 		
 	}
+	
+	@GetMapping(value = "/getAllSubejctByTeacherId",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SubjectEntity>> getAllSubejctByTeacherId(@RequestParam Integer teacherId){
+		List<SubjectEntity> subList = subjectService.getAllSubejctByTeacherId(teacherId);
+		if(subList.size()>0) {
+			return new ResponseEntity<>(subList,HttpStatus.OK);
+			
+		}
+		return new ResponseEntity<>(subList,HttpStatus.BAD_REQUEST);
+	}
+	
+	
 }

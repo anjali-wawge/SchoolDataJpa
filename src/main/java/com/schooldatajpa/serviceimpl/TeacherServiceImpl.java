@@ -1,5 +1,7 @@
 package com.schooldatajpa.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,12 @@ public class TeacherServiceImpl implements TeacherService {
 	public Integer saveTeacherData(TeacherEntity teacheEntity) {
 		TeacherEntity s=teacherRepository.save(teacheEntity);
 	    return s.getId();
+	}
+
+	@Override
+	public List<TeacherEntity> getAllTeacherBySubjectId(Integer subjectId) {
+		
+		return teacherRepository.getAllTeacherBySubjectId(subjectId);
 	}
 
 }

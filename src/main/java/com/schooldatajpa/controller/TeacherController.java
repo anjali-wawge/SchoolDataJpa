@@ -1,12 +1,16 @@
 package com.schooldatajpa.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.schooldatajpa.model.TeacherEntity;
@@ -27,4 +31,13 @@ public class TeacherController {
 		return new ResponseEntity<>("Pls check id",HttpStatus.BAD_REQUEST);
 	}
 
+	@GetMapping(value = "/getAllTeacherBySubjectId",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TeacherEntity>>getAllTeacherBySubjectId(@RequestParam Integer subjectId){
+		List<TeacherEntity> teacherList=teacherService.getAllTeacherBySubjectId(subjectId);
+		if(teacherList.size()>0) {
+			return new ResponseEntity<>(teacherList,HttpStatus.OK);
+		}
+		return new ResponseEntity<>(teacherList,HttpStatus.BAD_REQUEST);
+		
+	}
 }
